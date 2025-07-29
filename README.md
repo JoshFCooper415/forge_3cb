@@ -1,7 +1,7 @@
-# ⚔️  Forge: The Magic: The Gathering Rules Engine
-
+# ⚔️  Forge-3cb: The Magic: The Gathering Rules Engine for 3cb
+A fork of Forge
 Join the **Forge community** on [Discord](https://discord.gg/HcPJNyD66a)!
-
+Learn about 3cb [https://www.3cardblind.com/)!
 [![Test build](https://github.com/Card-Forge/forge/actions/workflows/test-build.yaml/badge.svg)](https://github.com/Card-Forge/forge/actions/workflows/test-build.yaml)
 
 ---
