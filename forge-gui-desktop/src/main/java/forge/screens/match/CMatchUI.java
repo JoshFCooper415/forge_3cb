@@ -53,6 +53,7 @@ import forge.deckchooser.FDeckViewer;
 import forge.game.GameEntity;
 import forge.game.GameEntityView;
 import forge.game.GameView;
+import forge.game.GameType;
 import forge.game.ability.AbilityKey;
 import forge.game.card.Card;
 import forge.game.card.CardView;
@@ -328,7 +329,7 @@ public final class CMatchUI
 
         int i = 0;
         for (final PlayerView p : sortedPlayers) {
-            if (allHands || isLocalPlayer(p) || CardView.mayViewAny(p.getHand(), localPlayers)) {
+            if (allHands || isLocalPlayer(p) || getGameView().getGameType() == GameType.CardBlind3 || CardView.mayViewAny(p.getHand(), localPlayers)) {
                 final EDocID doc = EDocID.Hands[i];
                 final VHand newHand = new VHand(this, doc, p);
                 newHand.getLayoutControl().initialize();

@@ -216,6 +216,11 @@ public class Match {
         library.setCards(newLibrary);
     }
 
+    private void prepare3CBZones(Player player, Deck deck, boolean canRandomFoil) {
+        // For 3-Card Blind, all cards start in the hand.
+        preparePlayerZone(player, ZoneType.Hand, deck.getMain(), canRandomFoil);
+    }
+
     private void prepareAllZones(final Game game) {
         // need this code here, otherwise observables fail
         Trigger.resetIDs();
@@ -301,25 +306,29 @@ public class Match {
                 }
             }
 
-            preparePlayerZone(player, ZoneType.Library, myDeck.getMain(), psc.useRandomFoil());
-            if (myDeck.has(DeckSection.Sideboard)) {
-                preparePlayerZone(player, ZoneType.Sideboard, myDeck.get(DeckSection.Sideboard), psc.useRandomFoil());
+            if (rules.getGameType() == GameType.CardBlind3) {
+                prepare3CBZones(player, myDeck, psc.useRandomFoil());
+            } else {
+                preparePlayerZone(player, ZoneType.Library, myDeck.getMain(), psc.useRandomFoil());
+                if (myDeck.has(DeckSection.Sideboard)) {
+                    preparePlayerZone(player, ZoneType.Sideboard, myDeck.get(DeckSection.Sideboard), psc.useRandomFoil());
 
-                // Assign Companion
-                Card companion = player.assignCompanion(game, person);
-                // Create an effect that lets you cast your companion from your sideboard
-                if (companion != null) {
-                    PlayerZone commandZone = player.getZone(ZoneType.Command);
-                    companion = game.getAction().moveTo(ZoneType.Command, companion, null, AbilityKey.newMap());
-                    commandZone.add(Player.createCompanionEffect(game, companion));
+                    // Assign Companion
+                    Card companion = player.assignCompanion(game, person);
+                    // Create an effect that lets you cast your companion from your sideboard
+                    if (companion != null) {
+                        PlayerZone commandZone = player.getZone(ZoneType.Command);
+                        companion = game.getAction().moveTo(ZoneType.Command, companion, null, AbilityKey.newMap());
+                        commandZone.add(Player.createCompanionEffect(game, companion));
 
-                    player.updateZoneForView(commandZone);
+                        player.updateZoneForView(commandZone);
+                    }
                 }
+
+                player.initVariantsZones(psc);
+
+                player.shuffle(null);
             }
-
-            player.initVariantsZones(psc);
-
-            player.shuffle(null);
 
             if (isFirstGame) {
                 Map<DeckSection, List<? extends PaperCard>> cardsComplained = player.getController().complainCardsCantPlayWell(myDeck);

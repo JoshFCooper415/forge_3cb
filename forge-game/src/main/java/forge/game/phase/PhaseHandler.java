@@ -264,7 +264,9 @@ public class PhaseHandler implements java.io.Serializable {
                     for (Player p : game.getPlayers()) {
                         p.resetNumDrawnThisDrawStep();
                     }
-                    playerTurn.drawCard();
+                    if (game.getRules().getGameType() != GameType.CardBlind3) {
+                        playerTurn.drawCard();
+                    }
                     break;
 
                 case MAIN1:

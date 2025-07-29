@@ -112,6 +112,7 @@ public enum DeckFormat {
     Vanguard       ( Range.of(60, Integer.MAX_VALUE), Range.is(0), 4),
     Planechase     ( Range.of(60, Integer.MAX_VALUE), Range.is(0), 4),
     Archenemy      ( Range.of(60, Integer.MAX_VALUE), Range.is(0), 4),
+    CardBlind3     ( Range.is(3), Range.is(0), 1),
     Puzzle         ( Range.of(0, Integer.MAX_VALUE), Range.is(0), 4);
 
     private final Range<Integer> mainRange;

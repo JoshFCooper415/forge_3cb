@@ -69,7 +69,8 @@ public enum GameType {
         deck.getOrCreate(DeckSection.Avatar).add(StaticData.instance().getVariantCards()
                 .getCard("Stonehewer Giant Avatar"), 1);
         return deck;
-    });
+    }),
+    CardBlind3          (DeckFormat.CardBlind3, false, false, false, "lblCardBlind3", "lblCardBlind3Desc");
 
     private final DeckFormat deckFormat;
     private final boolean isCardPoolLimited, canSideboard, addWonCardsMidGame;
@@ -128,6 +129,9 @@ public enum GameType {
     }
 
     public boolean isCommandZoneNeeded() {
+        if (this == GameType.CardBlind3) {
+            return false;
+        }
     	return true; //TODO: Figure out way to move command zone into field so it can be hidden when empty
         /*switch (this) {
         case Archenemy:

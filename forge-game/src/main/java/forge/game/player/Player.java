@@ -1297,7 +1297,9 @@ public class Player extends GameEntity implements Comparable<Player> {
             }
         }
         else { // Lose by milling is always on. Give AI many cards it cannot play if you want it not to undertake actions
-            triedToDrawFromEmptyLibrary = true;
+            if (game.getRules().getGameType() != GameType.CardBlind3) {
+                triedToDrawFromEmptyLibrary = true;
+            }
         }
         return drawn;
     }
